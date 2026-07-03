@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craig Sweat | Professional Briefing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080c14; --surface: #0e1420; --surface2: #131c2e; --border: #1c2a42;
+      --accent: #3b82f6; --accent2: #60a5fa; --accent-dim: rgba(59,130,246,0.08);
+      --accent-glow: rgba(59,130,246,0.15); --gold: #f59e0b; --gold-dim: rgba(245,158,11,0.08);
+      --gold-border: rgba(245,158,11,0.2); --text: #f0f2f7; --muted: #6b7a9a; --muted2: #8a99b8;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .5;
+    }
+    .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px 80px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(37,99,235,0.07) 0%, transparent 60%); pointer-events: none; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 70% at 50% 0%, black 0%, transparent 80%); opacity: 0.4; pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-dim); border: 1px solid rgba(59,130,246,0.25); border-radius: 100px; padding: 6px 16px; font-size: 0.75rem; font-family: 'DM Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 32px; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(0.8)} }
+    .hero h1 { font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.05; background: linear-gradient(135deg, #fff 30%, #93c5fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+    .hero-role { font-size: 1.1rem; color: var(--muted2); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; margin-bottom: 28px; }
+    .hero-meta { display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--muted); }
+    .hero-meta span { color: var(--border); }
+    .scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; animation: fadeUp 1s ease 1s both; }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top;opacity:0}50%{transform:scaleY(1);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:bottom;opacity:0} }
+    @keyframes fadeUp { from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)} }
+    .intro-wrap { max-width: 760px; margin: 0 auto 64px; padding: 0 24px; }
+    .intro-card { background: var(--accent-dim); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; padding: 24px 28px; display: flex; gap: 16px; align-items: flex-start; }
+    .intro-icon { width: 36px; height: 36px; flex-shrink: 0; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .intro-card p { font-size: 0.95rem; color: var(--muted2); line-height: 1.7; }
+    .intro-card strong { color: var(--text); font-weight: 600; }
+    .questions { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; display: flex; flex-direction: column; gap: 20px; }
+    .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px; position: relative; overflow: hidden; transition: border-color 0.25s, transform 0.2s; }
+    .q-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 0% 0%, var(--accent-glow), transparent 60%); opacity: 0; transition: opacity 0.35s; pointer-events: none; }
+    .q-card:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-2px); }
+    .q-card:hover::before { opacity: 1; }
+    .q-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .q-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent2); background: var(--accent-dim); border: 1px solid rgba(59,130,246,0.2); border-radius: 6px; padding: 4px 10px; white-space: nowrap; margin-top: 3px; flex-shrink: 0; }
+    .q-title { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.45; }
+    .q-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .q-body { font-size: 0.97rem; color: var(--muted2); line-height: 1.8; }
+    .closing-section { position: relative; overflow: hidden; border-top: 1px solid var(--border); padding: 100px 24px 120px; }
+    .closing-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(245,158,11,0.06) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 10% 50%, rgba(59,130,246,0.07) 0%, transparent 60%); pointer-events: none; }
+    .closing-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 80%); pointer-events: none; }
+    .closing-inner { max-width: 760px; margin: 0 auto; position: relative; }
+    .closing-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .closing-eyebrow::before, .closing-eyebrow::after { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); opacity: 0.5; }
+    .closing-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(135deg, #fff 20%, #fcd34d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .closing-sub { font-size: 0.95rem; color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 56px; }
+    .ground-block { background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(59,130,246,0.04)); border: 1px solid var(--gold-border); border-radius: 14px; padding: 32px; margin-bottom: 32px; position: relative; overflow: hidden; }
+    .ground-block::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--gold), transparent); border-radius: 4px 0 0 4px; }
+    .block-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .ground-block p { font-size: 0.97rem; color: var(--muted2); line-height: 1.85; }
+    .ground-block strong { color: var(--text); }
+    .note-block { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 30px 32px; margin-bottom: 20px; transition: border-color 0.25s, transform 0.2s; }
+    .note-block:hover { border-color: rgba(59,130,246,0.35); transform: translateY(-2px); }
+    .note-block .block-label { color: var(--accent2); }
+    .note-block p { font-size: 0.97rem; color: var(--muted2); line-height: 1.85; }
+    .note-block p + p { margin-top: 14px; }
+    .books-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 32px; }
+    .books-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .book-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 22px 20px; transition: border-color 0.25s, transform 0.2s; }
+    .book-card:hover { border-color: rgba(245,158,11,0.35); transform: translateY(-2px); }
+    .book-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 10px; }
+    .book-title { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+    .book-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .final-statement { margin-top: 48px; background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(245,158,11,0.04)); border: 1px solid rgba(59,130,246,0.18); border-radius: 16px; padding: 40px; text-align: center; position: relative; overflow: hidden; }
+    .final-statement::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(59,130,246,0.1), transparent 70%); pointer-events: none; }
+    .final-quote { font-size: clamp(1rem, 2.5vw, 1.25rem); font-weight: 500; color: var(--text); line-height: 1.7; position: relative; max-width: 560px; margin: 0 auto 20px; font-style: italic; }
+    .final-sig { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; }
+    footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+    .footer-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .footer-name { font-size: 1rem; font-weight: 600; background: linear-gradient(90deg, #fff, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge"><div class="badge-dot"></div>Candidate Briefing · 2026</div>
+    <h1>Craig Sweat</h1>
+    <div class="hero-role">Operations &amp; Strategy · Legacy Financial Planning</div>
+    <div class="hero-meta">Blanchard, Oklahoma <span>·</span> Life Insurance Candidate <span>·</span> Confidential Document</div>
+    <div class="scroll-hint"><div class="scroll-line"></div>Scroll</div>
+  </section>
+
+  <div class="intro-wrap fade-in">
+    <div class="intro-card">
+      <div class="intro-icon">📋</div>
+      <p><strong>Application Note:</strong> This document serves as the structural transcript accompanying my candidate submission. It outlines my operational approach, core competencies, and strategic alignment with the milestone parameters requested.</p>
+    </div>
+  </div>
+
+  <div class="questions">
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 01</div><div class="q-title">Tell us about yourself — your introduction and your story.</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">I am an independent researcher, technologist, and entrepreneurial innovator. My background is heavily driven by deep, self-directed learning across complex systems, mathematics, and science. I approach challenges like an investigator looking for optimization, which has driven my work in logistics, operations, and independent technical projects. I thrive in high-yield, fast-paced environments where strategic execution and rigorous discipline are required daily.</p>
+    </div>
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 02</div><div class="q-title">Why are you interested in working with Legacy Financial Planning?</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">I see financial planning as a structural science—building engineered systems to protect and compound capital. Legacy Financial Planning offers the exact framework where I can apply a sharp, analytical strategy to real-world wealth architecture. I am looking to build a high-performing career where my growth is directly tied to the efficiency and value of the solutions I build, while collaborating with a network of high-caliber professional partners and future colleagues.</p>
+    </div>
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 03</div><div class="q-title">What are your personal income goals over the next 6–12 months?</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">My target over the next 6 to 12 months is to eliminate personal overhead completely and establish a highly scalable baseline of capital to fund my long-term business and career development goals. To achieve this, my focus is on maximum productivity to build a robust client portfolio and maximize commission metrics from day one.</p>
+    </div>
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 04</div><div class="q-title">Are you currently licensed to sell life insurance? If not, will you be able to complete the training within the 30-day deadline?</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">I am not currently licensed to sell life insurance. However, I am highly accustomed to intensive, self-directed academic workloads and technical training. Absorbing complex material efficiently is one of my core strengths, and I will have no issue completing the training and passing the licensing exam well within your 30-day deadline.</p>
+    </div>
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 05</div><div class="q-title">If you are licensed, how soon will you be able to start selling here at Legacy Financial Planning?</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">As soon as my licensing, background checks, and onboarding requirements are finalized, I am prepared to begin immediate client operations.</p>
+    </div>
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 06</div><div class="q-title">This is a 100% commission opportunity. What gives you confidence that you can succeed in that environment?</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">A 100% commission structure aligns perfectly with my mindset. I am an adventure capitalist at heart; I prefer to rely entirely on my own output, discipline, and strategic execution rather than a fixed salary ceiling. My confidence comes from a proven track record of managing independent projects, breaking down massive structural challenges into actionable data points, and the drive to eliminate financial variables through raw productivity.</p>
+    </div>
+
+    <div class="q-card fade-in">
+      <div class="q-header"><div class="q-num">Q 07</div><div class="q-title">Why should we choose you over other applicants?</div></div>
+      <div class="q-divider"></div>
+      <p class="q-body">You should choose me because I don't view financial products as simple transactions — I view them as critical components of a broader wealth system. I bring a rare combination of intense analytical focus, an entrepreneurial work ethic, and the communication skills necessary to build high-value relationships. I am not looking for a comfortable job; I am here to build a high-yield enterprise within your ecosystem.</p>
+    </div>
+
+  </div>
+
+  <section class="closing-section">
+    <div class="closing-grid"></div>
+    <div class="closing-inner">
+
+      <div class="closing-eyebrow fade-in">Beyond the Briefing</div>
+      <h2 class="closing-title fade-in">The Ground I Stand On.<br/>The Sky I'm Building Toward.</h2>
+      <p class="closing-sub fade-in">Legacy is not just the name of the firm I'm applying to. It is the operating principle behind every decision I have made and every system I am building.</p>
+
+      <div class="ground-block fade-in">
+        <div class="block-label">⚡ Current Ground Condition</div>
+        <p>I will not dress this up: <strong>my present situation is difficult.</strong> Resources are thin, the margin for error is narrow, and the pressure is real. I am not writing from a position of comfortable momentum — I am writing from the kind of friction that either breaks a person or reveals exactly what they are made of.</p>
+        <p style="margin-top:14px;">What I have — in place of capital, in place of safety nets — is <strong>grit, operational efficiency, and an absolute intolerance for stagnation.</strong> I manage what I have with precision. I do not waste cycles on what is not actionable. And I use constraint the way engineers use pressure: as a forcing function that produces denser, faster output. This position is not a footnote in my story. It is the proof of concept.</p>
+      </div>
+
+      <div class="note-block fade-in">
+        <div class="block-label">🎓 Active Foundation · Pharmacy Technician Program</div>
+        <p>I am currently completing a specialized Pharmacy Technician program — not because it is my ceiling, but because it is a calculated entry point into a world of complex, regulated systems and high-caliber professional networks. The discipline of pharmacology demands precision, regulatory fluency, and the ability to operate under legal and clinical accountability — the same competencies that translate directly into financial services and systems-level design.</p>
+        <p>This program is a deliberate stepping stone toward my longer arc as a pharmacist and, beyond that, a researcher operating at the intersection of biochemistry, materials science, and advanced medical technology. Every credential I acquire is a resource tile placed on a much larger board.</p>
+      </div>
+
+      <div class="note-block fade-in">
+        <div class="block-label">🏗️ Active Venture · The Dissolution of Gods Plan</div>
+        <p>In parallel with my academic work, I am fast-running the operational systems for a company I am building called <strong>The Dissolution of Gods Plan</strong> — focused on stellar technology advancement and counter-terrorism infrastructure. Over the next five years, my goal is to secure substantial investment across multiple verticals and contribute to the development of future public infrastructure, code architecture, and human resource systems.</p>
+        <p>Being an inventor requires immense capital and time. Right now I am in the blueprinting phase — writing machine code, structuring frameworks, and assembling the precise resources required for this present stage. The speed of execution on that front is directly tied to the financial foundation I am building today. Legacy Financial Planning is part of that foundation.</p>
+      </div>
+
+      <div class="books-label fade-in">📚 Research Trajectory · Active Publications in Development</div>
+      <div class="books-grid">
+        <div class="book-card fade-in">
+          <div class="book-num">VOL. I</div>
+          <div class="book-title">The Codex Architectum</div>
+          <div class="book-desc">A compressed AI mathematical language centered on snowflake geometry — engineered to accelerate higher-dimensional calculation frameworks.</div>
+        </div>
+        <div class="book-card fade-in">
+          <div class="book-num">VOL. II</div>
+          <div class="book-title">Monas Impossibilis</div>
+          <div class="book-desc">A hyperreal comic and narrative that externalizes the origin of this knowledge — turning personal trauma into a medium for broad public engagement.</div>
+        </div>
+        <div class="book-card fade-in">
+          <div class="book-num">VOL. III</div>
+          <div class="book-title">Transmutation Technology</div>
+          <div class="book-desc">A forthcoming title exploring the modern systemic integration of transmutation technology and its implications for material economics.</div>
+        </div>
+      </div>
+
+      <div class="note-block fade-in" style="margin-top:20px; border-color: rgba(245,158,11,0.15);">
+        <div class="block-label" style="color:#fbbf24;">🔭 Long-Horizon Vision</div>
+        <p>My long-term research pushes into territory that most institutions are not yet willing to discuss openly: the transfer of consciousness, the development of adaptive biological vessels people can architect for themselves, and the expansion of human presence beyond terrestrial infrastructure. I understand how disruptive these fields sound. What strikes me as stranger is that centralized institutions with access to these breakthroughs have not released them.</p>
+        <p>I am building toward a secured, independent operational station before I execute on the higher phases of this work. The sequencing is intentional. I will not compromise the integrity of the system by moving too early. Until those conditions are met, I am methodically completing every milestone on the path: college, licensure, cash flow, team-building, and the structural scaffolding required to protect everything I am building.</p>
+      </div>
+
+      <div class="final-statement fade-in">
+        <p class="final-quote">"I am not asking Legacy Financial Planning to believe in my full vision. I am asking for the chance to demonstrate what I do when given access to a system worth building within — and the results will speak in the only language that matters here: performance."</p>
+        <div class="final-sig">— Craig Sweat · Blanchard, Oklahoma · 2026</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-name">Craig Sweat</div>
+      <div class="footer-copy">© 2026 · Confidential Candidate Briefing</div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
